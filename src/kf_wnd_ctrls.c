@@ -21,7 +21,6 @@ add_item (kf_ctrl_item_t item)
   ctrl_item_list[cur_item_list_idx] = item;
   cur_item_list_idx++;
 }
-
 HWND
 kf_wnd_ctrls_get_by_id (const char *identifier)
 {
@@ -32,15 +31,29 @@ kf_wnd_ctrls_get_by_id (const char *identifier)
     }
   return NULL;
 }
+// TODO: implement menu and style specification
 HWND
 kf_wnd_ctrls_add_button (kf_wnd_t *wnd, const char *identifier,
                          const char *text, int *pos, int *size)
 {
-  // TODO: implement menu and style specification
   kf_ctrl_item_t item;
   item.identifier = identifier;
   item.handle = CreateWindow (
       WC_BUTTON, text, WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+      pos[0], pos[1], size[0], size[1], wnd->hwnd, NULL, wnd->wc.hInstance,
+      NULL);
+
+  add_item (item);
+  return item.handle;
+}
+HWND
+kf_wnd_ctrls_add_combobox (kf_wnd_t *wnd, const char *identifier, int *pos,
+                           int *size)
+{
+  kf_ctrl_item_t item;
+  item.identifier = identifier;
+  item.handle = CreateWindow (
+      WC_COMBOBOX, "", WS_VISIBLE | WS_CHILD | CBS_DROPDOWN | CBS_HASSTRINGS,
       pos[0], pos[1], size[0], size[1], wnd->hwnd, NULL, wnd->wc.hInstance,
       NULL);
 

@@ -2,6 +2,8 @@
 #include "../kf_wnd.h"
 #include "../kf_wnd_ctrls.h"
 #include <Windows.h>
+#include <stdio.h>
+#include <windowsx.h> // not sure if i should use these macros
 
 #define EXAMPLE_CLASS_NAME "example class"
 #define EXAMPLE_WINDOW_NAME "example window"
@@ -14,10 +16,21 @@ HBRUSH bg_handle = NULL;
 void
 window_process_commands (HWND hwnd, WPARAM wparam, LPARAM lparam)
 {
+  HWND combobox_handle = kf_wnd_ctrls_get_by_id ("cb_test");
+  WPARAM combobox_selection = ComboBox_GetCurSel (combobox_handle);
+  if ((int)combobox_selection < 0)
+    return;
+
   if (lparam == (LPARAM)kf_wnd_ctrls_get_by_id ("btn_test"))
     {
-      MessageBox (hwnd, "you pressed the test button!", EXAMPLE_WINDOW_NAME,
-                  MB_OK);
+      char combobox_text[32];
+      ComboBox_GetLBText (combobox_handle, combobox_selection, &combobox_text);
+
+      char buf[256];
+      sprintf_s (buf, sizeof (buf), "the combobox entry selected is \"%s\"",
+                 combobox_text);
+
+      MessageBox (hwnd, buf, EXAMPLE_WINDOW_NAME, MB_OK);
     }
 }
 
@@ -61,9 +74,21 @@ window_process (HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 void
 window_populate_items ()
 {
-  int pos[2] = { 10, 10 };
-  int size[2] = { 50, 20 };
-  kf_wnd_ctrls_add_button (&window, "btn_test", "test", pos, size);
+  {
+    int pos[2] = { 160, 10 };
+    int size[2] = { 90, 22 };
+    kf_wnd_ctrls_add_button (&window, "btn_test", "test", pos, size);
+  }
+  {
+    int pos[2] = { 10, 10 };
+    int size[2] = { 150, 100 };
+    HWND combobox_handle
+        = kf_wnd_ctrls_add_combobox (&window, "cb_test", pos, size);
+
+    ComboBox_AddString (combobox_handle, "test entry");
+    ComboBox_AddString (combobox_handle, "another test entry");
+    ComboBox_AddString (combobox_handle, "yet another one");
+  }
 }
 
 HWND
