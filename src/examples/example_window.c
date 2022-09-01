@@ -72,15 +72,16 @@ window_process (HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 }
 
 void
-window_populate_items ()
+window_populate_items (RECT rect)
 {
+  const int padding = 10;
   {
-    int pos[2] = { 160, 10 };
+    int pos[2] = { 160, padding * 2 };
     int size[2] = { 90, 22 };
     kf_wnd_ctrls_add_button (&window, "btn_test", "test", pos, size);
   }
   {
-    int pos[2] = { 10, 10 };
+    int pos[2] = { padding, padding * 2 };
     int size[2] = { 150, 100 };
     HWND combobox_handle
         = kf_wnd_ctrls_add_combobox (&window, "cb_test", pos, size);
@@ -88,6 +89,11 @@ window_populate_items ()
     ComboBox_AddString (combobox_handle, "test entry");
     ComboBox_AddString (combobox_handle, "another test entry");
     ComboBox_AddString (combobox_handle, "yet another one");
+  }
+  {
+    int pos[2] = { padding / 2, 0 };
+    int size[2] = { rect.right - padding, 250 };
+    kf_wnd_ctrls_add_groupbox (&window, "gb_test", pos, size);
   }
 }
 
@@ -111,7 +117,9 @@ example_initialize ()
   if (!kf_wnd_init (&window))
     return false;
 
-  window_populate_items ();
+  RECT rect;
+  GetClientRect (window.hwnd, &rect);
+  window_populate_items (rect);
 
   return true;
 }
