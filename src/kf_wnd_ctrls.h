@@ -11,5 +11,7 @@ HWND kf_wnd_ctrls_add_combobox (kf_wnd_t *wnd, const char *identifier,
                                 int *pos, int *size);
 HWND kf_wnd_ctrls_add_groupbox (kf_wnd_t *wnd, const char *identifier,
                                 int *pos, int *size);
+HWND kf_wnd_ctrls_add_listbox (kf_wnd_t *wnd, const char *identifier, int *pos,
+                               int *size);
 
 #endif // KF_WND_CTRLS
