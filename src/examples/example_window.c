@@ -29,7 +29,7 @@ window_draw_simple_text (HWND hwnd)
   HDC hdc = BeginPaint (hwnd, &ps);
   GetClientRect (hwnd, &rect);
   FillRect (hdc, &rect, bg_handle);
-  DrawText (hdc, "example test to draw", -1, &rect,
+  DrawText (hdc, "example text to draw", -1, &rect,
             DT_SINGLELINE | DT_CENTER | DT_VCENTER);
   EndPaint (hwnd, &ps);
 }
