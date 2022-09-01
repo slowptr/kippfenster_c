@@ -93,7 +93,8 @@ window_populate_items (RECT rect)
   {
     int pos[2] = { padding / 2, 0 };
     int size[2] = { rect.right - padding, 250 };
-    kf_wnd_ctrls_add_groupbox (&window, "gb_test", pos, size);
+    kf_wnd_ctrls_add_groupbox (&window, "gb_test", "my groupbox :)", pos,
+                               size);
   }
 }
 

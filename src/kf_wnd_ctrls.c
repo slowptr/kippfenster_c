@@ -65,11 +65,11 @@ kf_wnd_ctrls_add_combobox (kf_wnd_t *wnd, const char *identifier, int *pos,
   return make_and_add_item (identifier, handle);
 }
 HWND
-kf_wnd_ctrls_add_groupbox (kf_wnd_t *wnd, const char *identifier, int *pos,
-                           int *size)
+kf_wnd_ctrls_add_groupbox (kf_wnd_t *wnd, const char *identifier,
+                           const char *text, int *pos, int *size)
 {
   HWND handle = CreateWindow (
-      WC_BUTTON, "", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, pos[0], pos[1],
+      WC_BUTTON, text, WS_VISIBLE | WS_CHILD | BS_GROUPBOX, pos[0], pos[1],
       size[0], size[1], wnd->hwnd, NULL, wnd->wc.hInstance, NULL);
 
   return make_and_add_item (identifier, handle);
