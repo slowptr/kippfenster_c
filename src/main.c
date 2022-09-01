@@ -1,5 +1,9 @@
+#include "examples/example_window.h"
+
 int
 main ()
 {
-  return 0;
+  if (!example_initialize ())
+    return 1;
+  return example_msg_loop ();
 }
