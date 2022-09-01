@@ -48,6 +48,12 @@ window_process (HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
     case WM_PAINT:
       window_draw_simple_text (hwnd);
       return 0;
+    case WM_CLOSE:
+      kf_wnd_destroy (&window);
+      return 0;
+    case WM_DESTROY:
+      PostQuitMessage (0);
+      return 0;
     }
   return DefWindowProc (hwnd, msg, wparam, lparam);
 }
@@ -72,7 +78,7 @@ example_initialize ()
   if (!kf_wc_create (window_process, EXAMPLE_CLASS_NAME, &window_class))
     return false;
 
-  DWORD style = WS_OVERLAPPED;
+  DWORD style = WS_OVERLAPPED | WS_SYSMENU;
   int pos[2] = { CW_USEDEFAULT, CW_USEDEFAULT };
   int size[2] = { EXAMPLE_WINDOW_WIDTH, EXAMPLE_WINDOW_HEIGHT };
   window = kf_wnd_create (window_class, EXAMPLE_WINDOW_NAME, style, pos, size);

@@ -59,9 +59,8 @@ kf_wnd_init (kf_wnd_t *wnd)
   return true;
 }
 void
-kf_wnd_cleanup (kf_wnd_t *wnd)
+kf_wnd_destroy (kf_wnd_t *wnd)
 {
-  PostQuitMessage (0);
   DestroyWindow (wnd->hwnd);
 }
 WPARAM
