@@ -43,6 +43,16 @@ kf_wnd_ctrls_get_by_id (const char *identifier)
 }
 // TODO: implement menu and style specification
 HWND
+kf_wnd_ctrls_add_label (kf_wnd_t *wnd, const char *identifier,
+                        const char *text, int *pos, int *size)
+{
+  HWND handle = CreateWindow (
+      WC_STATIC, text, WS_VISIBLE | WS_CHILD | SS_CENTER, pos[0], pos[1],
+      size[0], size[1], wnd->hwnd, NULL, wnd->wc.hInstance, NULL);
+
+  return make_and_add_item (identifier, handle);
+}
+HWND
 kf_wnd_ctrls_add_button (kf_wnd_t *wnd, const char *identifier,
                          const char *text, int *pos, int *size)
 {
